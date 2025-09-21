@@ -1,11 +1,11 @@
 package com.mb.crawler.engine.infrastructure.consumer;
 
+import com.mb.crawler.events.PageToCrawlEvent;
 import com.mb.crawler.engine.api.CrawlerApi;
-import com.mb.crawler.engine.api.PageToCrawl;
-import com.mb.crawler.engine.infrastructure.producer.CrawlResultEvent;
-import com.mb.crawler.engine.infrastructure.producer.CrawlResultPublisher;
+import com.mb.crawler.events.CrawlResultEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -14,17 +14,17 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PageToCrawlListener {
     private final CrawlerApi crawlerApi;
-    private final CrawlResultPublisher crawlResultPublisher;
+    private final ApplicationEventPublisher eventPublisher;
 
 
     @EventListener
     public void on(PageToCrawlEvent event) {
         try {
-            var result = crawlerApi.crawl(new PageToCrawl(event.url()));
+            var result = crawlerApi.crawl(event.url());
 
             if (result.isPresent()) {
                 log.debug("Page crawl result {}", result);
-                crawlResultPublisher.publish(new CrawlResultEvent(result.get().originLink(), result.get().links()));
+                eventPublisher.publishEvent(new CrawlResultEvent(result.get().originLink(), result.get().links()));
             } else {
                 log.debug("Empty result");
             }

@@ -3,5 +3,5 @@ package com.mb.crawler.engine.api;
 import java.util.Optional;
 
 public interface CrawlerApi {
-    Optional<CrawlResult> crawl(PageToCrawl pageToCrawl);
+    Optional<CrawlResult> crawl(String url);
 }
