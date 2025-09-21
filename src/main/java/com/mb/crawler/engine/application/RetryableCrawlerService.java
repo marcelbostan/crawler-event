@@ -3,7 +3,6 @@ package com.mb.crawler.engine.application;
 import com.mb.crawler.catalog.VisitedPages;
 import com.mb.crawler.engine.api.CrawlResult;
 import com.mb.crawler.engine.api.CrawlerApi;
-import com.mb.crawler.engine.api.PageToCrawl;
 import com.mb.crawler.engine.application.extractor.NonRetriablePageFetchException;
 import com.mb.crawler.engine.application.extractor.PageFetchException;
 import com.mb.crawler.engine.application.extractor.WebPageContentExtractor;
@@ -31,8 +30,7 @@ public class RetryableCrawlerService implements CrawlerApi {
             backoff = @Backoff(delay = 10_000, multiplier = 4.0),
             listeners = {"crawlerRetryLogger"}
     )
-    public Optional<CrawlResult> crawl(PageToCrawl pageToCrawl) {
-        String url = pageToCrawl.url();
+    public Optional<CrawlResult> crawl(String url) {
 
         if (!visitedPages.couldVisit(url)) {
             log.debug("Page[{}] was already crawled", url);

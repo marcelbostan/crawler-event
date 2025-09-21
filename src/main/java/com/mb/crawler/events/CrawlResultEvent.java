@@ -1,4 +1,4 @@
-package com.mb.crawler.engine.infrastructure.producer;
+package com.mb.crawler.events;
 
 import java.util.Set;
 
