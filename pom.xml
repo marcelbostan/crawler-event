@@ -29,6 +29,7 @@
     <properties>
         <java.version>25</java.version>
         <spring-modulith.version>1.4.1</spring-modulith.version>
+        <jsoup.version>1.21.1</jsoup.version>
     </properties>
     <dependencies>
         <dependency>
@@ -67,6 +68,15 @@
             <groupId>org.springframework.modulith</groupId>
             <artifactId>spring-modulith-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
         </dependency>
     </dependencies>
     <dependencyManagement>
